@@ -1,0 +1,24 @@
+{
+  "name": "eth",
+  "version": "1.0.0",
+  "description": "Ethereum Based projects and codes",
+  "main": "2act.js",
+  "dependencies": {
+    "merkle-tree-gen": "^1.1.0",
+    "web3": "^1.2.9"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mbcse/ETH_INDIA_FELLOWSHIP.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mbcse/ETH_INDIA_FELLOWSHIP/issues"
+  },
+  "homepage": "https://github.com/mbcse/ETH_INDIA_FELLOWSHIP#readme"
+}

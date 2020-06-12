@@ -1,0 +1,469 @@
+
+{
+  "header": {
+    "reportVersion": 1,
+    "event": "Allocation failed - JavaScript heap out of memory",
+    "trigger": "FatalError",
+    "filename": "report.20200613.005755.33220.0.001.json",
+    "dumpEventTime": "2020-06-13T00:57:55Z",
+    "dumpEventTimeStamp": "1591990075139",
+    "processId": 33220,
+    "cwd": "C:\\Users\\MOHITBHAT\\Desktop\\ETH_INDIA_FELLOWSHIP\\ETH_INDIA_FELLOWSHIP",
+    "commandLine": [
+      "C:\\Program Files\\nodejs\\node.exe",
+      "3act"
+    ],
+    "nodejsVersion": "v12.14.1",
+    "wordSize": 64,
+    "arch": "x64",
+    "platform": "win32",
+    "componentVersions": {
+      "node": "12.14.1",
+      "v8": "7.7.299.13-node.16",
+      "uv": "1.33.1",
+      "zlib": "1.2.11",
+      "brotli": "1.0.7",
+      "ares": "1.15.0",
+      "modules": "72",
+      "nghttp2": "1.40.0",
+      "napi": "5",
+      "llhttp": "2.0.1",
+      "http_parser": "2.8.0",
+      "openssl": "1.1.1d",
+      "cldr": "35.1",
+      "icu": "64.2",
+      "tz": "2019c",
+      "unicode": "12.1"
+    },
+    "release": {
+      "name": "node",
+      "lts": "Erbium",
+      "headersUrl": "https://nodejs.org/download/release/v12.14.1/node-v12.14.1-headers.tar.gz",
+      "sourceUrl": "https://nodejs.org/download/release/v12.14.1/node-v12.14.1.tar.gz",
+      "libUrl": "https://nodejs.org/download/release/v12.14.1/win-x64/node.lib"
+    },
+    "osName": "Windows_NT",
+    "osRelease": "10.0.18363",
+    "osVersion": "Windows 10 Home Single Language",
+    "osMachine": "x86_64",
+    "cpus": [
+      {
+        "model": "Intel(R) Core(TM) i7-9750H CPU @ 2.60GHz",
+        "speed": 2592,
+        "user": 1191531,
+        "nice": 0,
+        "sys": 2210921,
+        "idle": 48034000,
+        "irq": 629343
+      },
+      {
+        "model": "Intel(R) Core(TM) i7-9750H CPU @ 2.60GHz",
+        "speed": 2592,
+        "user": 638562,
+        "nice": 0,
+        "sys": 628968,
+        "idle": 50168562,
+        "irq": 8750
+      },
+      {
+        "model": "Intel(R) Core(TM) i7-9750H CPU @ 2.60GHz",
+        "speed": 2592,
+        "user": 2017796,
+        "nice": 0,
+        "sys": 1398296,
+        "idle": 48020000,
+        "irq": 16046
+      },
+      {
+        "model": "Intel(R) Core(TM) i7-9750H CPU @ 2.60GHz",
+        "speed": 2592,
+        "user": 706375,
+        "nice": 0,
+        "sys": 567390,
+        "idle": 50162328,
+        "irq": 5687
+      },
+      {
+        "model": "Intel(R) Core(TM) i7-9750H CPU @ 2.60GHz",
+        "speed": 2592,
+        "user": 1325031,
+        "nice": 0,
+        "sys": 1254187,
+        "idle": 48856875,
+        "irq": 13328
+      },
+      {
+        "model": "Intel(R) Core(TM) i7-9750H CPU @ 2.60GHz",
+        "speed": 2592,
+        "user": 602015,
+        "nice": 0,
+        "sys": 693750,
+        "idle": 50140328,
+        "irq": 5359
+      },
+      {
+        "model": "Intel(R) Core(TM) i7-9750H CPU @ 2.60GHz",
+        "speed": 2592,
+        "user": 1254890,
+        "nice": 0,
+        "sys": 1366796,
+        "idle": 48814406,
+        "irq": 13437
+      },
+      {
+        "model": "Intel(R) Core(TM) i7-9750H CPU @ 2.60GHz",
+        "speed": 2592,
+        "user": 690687,
+        "nice": 0,
+        "sys": 468406,
+        "idle": 50277000,
+        "irq": 5125
+      },
+      {
+        "model": "Intel(R) Core(TM) i7-9750H CPU @ 2.60GHz",
+        "speed": 2592,
+        "user": 1051453,
+        "nice": 0,
+        "sys": 1067015,
+        "idle": 49317609,
+        "irq": 11718
+      },
+      {
+        "model": "Intel(R) Core(TM) i7-9750H CPU @ 2.60GHz",
+        "speed": 2592,
+        "user": 606046,
+        "nice": 0,
+        "sys": 428984,
+        "idle": 50401046,
+        "irq": 6640
+      },
+      {
+        "model": "Intel(R) Core(TM) i7-9750H CPU @ 2.60GHz",
+        "speed": 2592,
+        "user": 972968,
+        "nice": 0,
+        "sys": 1731062,
+        "idle": 48732046,
+        "irq": 18796
+      },
+      {
+        "model": "Intel(R) Core(TM) i7-9750H CPU @ 2.60GHz",
+        "speed": 2592,
+        "user": 838062,
+        "nice": 0,
+        "sys": 562125,
+        "idle": 50035890,
+        "irq": 7437
+      }
+    ],
+    "networkInterfaces": [
+      {
+        "name": "Wi-Fi",
+        "internal": false,
+        "mac": "38:00:25:3f:09:0d",
+        "address": "2405:204:3290:a217:c8d5:96f:d823:cfa4",
+        "netmask": "ffff:ffff:ffff:ffff::",
+        "family": "IPv6",
+        "scopeid": 0
+      },
+      {
+        "name": "Wi-Fi",
+        "internal": false,
+        "mac": "38:00:25:3f:09:0d",
+        "address": "2405:204:3290:a217:1467:7b72:6714:73c9",
+        "netmask": "ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff",
+        "family": "IPv6",
+        "scopeid": 0
+      },
+      {
+        "name": "Wi-Fi",
+        "internal": false,
+        "mac": "38:00:25:3f:09:0d",
+        "address": "fe80::c8d5:96f:d823:cfa4",
+        "netmask": "ffff:ffff:ffff:ffff::",
+        "family": "IPv6",
+        "scopeid": 5
+      },
+      {
+        "name": "Wi-Fi",
+        "internal": false,
+        "mac": "38:00:25:3f:09:0d",
+        "address": "192.168.43.39",
+        "netmask": "255.255.255.0",
+        "family": "IPv4"
+      },
+      {
+        "name": "Loopback Pseudo-Interface 1",
+        "internal": true,
+        "mac": "00:00:00:00:00:00",
+        "address": "::1",
+        "netmask": "ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff",
+        "family": "IPv6",
+        "scopeid": 0
+      },
+      {
+        "name": "Loopback Pseudo-Interface 1",
+        "internal": true,
+        "mac": "00:00:00:00:00:00",
+        "address": "127.0.0.1",
+        "netmask": "255.0.0.0",
+        "family": "IPv4"
+      }
+    ],
+    "host": "LAPTOP-GFOS5NH9"
+  },
+  "javascriptStack": {
+    "message": "No stack.",
+    "stack": [
+      "Unavailable."
+    ]
+  },
+  "nativeStack": [
+    {
+      "pc": "0x00007ff64b001759",
+      "symbol": "std::basic_ostream<char,std::char_traits<char> >::operator<<+10873"
+    },
+    {
+      "pc": "0x00007ff64b005b7c",
+      "symbol": "std::basic_ostream<char,std::char_traits<char> >::operator<<+28316"
+    },
+    {
+      "pc": "0x00007ff64b004b38",
+      "symbol": "std::basic_ostream<char,std::char_traits<char> >::operator<<+24152"
+    },
+    {
+      "pc": "0x00007ff64b0f433b",
+      "symbol": "v8::base::CPU::has_sse+37723"
+    },
+    {
+      "pc": "0x00007ff64b8f8c5e",
+      "symbol": "v8::Isolate::ReportExternalAllocationLimitReached+94"
+    },
+    {
+      "pc": "0x00007ff64b8e0ca1",
+      "symbol": "v8::SharedArrayBuffer::Externalize+833"
+    },
+    {
+      "pc": "0x00007ff64b7ae56c",
+      "symbol": "v8::internal::Heap::EphemeronKeyWriteBarrierFromCode+1436"
+    },
+    {
+      "pc": "0x00007ff64b7b9910",
+      "symbol": "v8::internal::Heap::ProtectUnprotectedMemoryChunks+1312"
+    },
+    {
+      "pc": "0x00007ff64b7b6444",
+      "symbol": "v8::internal::Heap::PageFlagsAreConsistent+3204"
+    },
+    {
+      "pc": "0x00007ff64b7abcd3",
+      "symbol": "v8::internal::Heap::CollectGarbage+1283"
+    },
+    {
+      "pc": "0x00007ff64b7aa4a4",
+      "symbol": "v8::internal::Heap::AddRetainedMap+2356"
+    },
+    {
+      "pc": "0x00007ff64b7cb775",
+      "symbol": "v8::internal::Factory::NewFillerObject+53"
+    },
+    {
+      "pc": "0x00007ff64b5378d7",
+      "symbol": "v8::internal::interpreter::JumpTableTargetOffsets::iterator::operator=+3687"
+    },
+    {
+      "pc": "0x00007ff64bd2463d",
+      "symbol": "v8::internal::SetupIsolateDelegate::SetupHeap+567949"
+    },
+    {
+      "pc": "0x00000295707a7dc5",
+      "symbol": ""
+    }
+  ],
+  "javascriptHeap": {
+    "totalMemory": 2162765824,
+    "totalCommittedMemory": 2162765824,
+    "usedMemory": 2137839552,
+    "availableMemory": 56826304,
+    "memoryLimit": 2197815296,
+    "heapSpaces": {
+      "read_only_space": {
+        "memorySize": 262144,
+        "committedMemory": 262144,
+        "capacity": 261872,
+        "used": 32296,
+        "available": 229576
+      },
+      "new_space": {
+        "memorySize": 9437184,
+        "committedMemory": 9437184,
+        "capacity": 4713696,
+        "used": 611680,
+        "available": 4102016
+      },
+      "old_space": {
+        "memorySize": 2148380672,
+        "committedMemory": 2148380672,
+        "capacity": 2146092896,
+        "used": 2133361352,
+        "available": 12731544
+      },
+      "code_space": {
+        "memorySize": 688128,
+        "committedMemory": 688128,
+        "capacity": 422688,
+        "used": 422688,
+        "available": 0
+      },
+      "map_space": {
+        "memorySize": 1052672,
+        "committedMemory": 1052672,
+        "capacity": 525920,
+        "used": 525920,
+        "available": 0
+      },
+      "large_object_space": {
+        "memorySize": 2895872,
+        "committedMemory": 2895872,
+        "capacity": 2882064,
+        "used": 2882064,
+        "available": 0
+      },
+      "code_large_object_space": {
+        "memorySize": 49152,
+        "committedMemory": 49152,
+        "capacity": 3552,
+        "used": 3552,
+        "available": 0
+      },
+      "new_large_object_space": {
+        "memorySize": 0,
+        "committedMemory": 0,
+        "capacity": 4713696,
+        "used": 0,
+        "available": 4713696
+      }
+    }
+  },
+  "resourceUsage": {
+    "userCpuSeconds": 56.015,
+    "kernelCpuSeconds": 3.734,
+    "cpuConsumptionPercent": 229.804,
+    "maxRss": 2431565824,
+    "pageFaults": {
+      "IORequired": 774531,
+      "IONotRequired": 0
+    },
+    "fsActivity": {
+      "reads": 586,
+      "writes": 6
+    }
+  },
+  "libuv": [
+  ],
+  "environmentVariables": {
+    "ALLUSERSPROFILE": "C:\\ProgramData",
+    "APPDATA": "C:\\Users\\MOHITBHAT\\AppData\\Roaming",
+    "ChocolateyInstall": "C:\\ProgramData\\chocolatey",
+    "ChocolateyLastPathUpdate": "132238302108723216",
+    "CommonProgramFiles": "C:\\Program Files\\Common Files",
+    "CommonProgramFiles(x86)": "C:\\Program Files (x86)\\Common Files",
+    "CommonProgramW6432": "C:\\Program Files\\Common Files",
+    "COMPUTERNAME": "LAPTOP-GFOS5NH9",
+    "ComSpec": "C:\\WINDOWS\\system32\\cmd.exe",
+    "DriverData": "C:\\Windows\\System32\\Drivers\\DriverData",
+    "ERLANG_HOME": "C:\\Program Files\\erl10.7",
+    "ETHEREUM_SOCKET": "\\\\.\\pipe\\geth.ipc",
+    "FPS_BROWSER_APP_PROFILE_STRING": "Internet Explorer",
+    "FPS_BROWSER_USER_PROFILE_STRING": "Default",
+    "GameFirst": "C:\\Program Files (x86)\\ASUS\\GameFirst\\",
+    "GameFirstUserPath": "C:\\Users\\Administrator\\AppData\\Local\\ASUS\\GameFirst",
+    "HOMEDRIVE": "C:",
+    "HOMEPATH": "\\Users\\MOHITBHAT",
+    "LOCALAPPDATA": "C:\\Users\\MOHITBHAT\\AppData\\Local",
+    "LOGONSERVER": "\\\\LAPTOP-GFOS5NH9",
+    "NUMBER_OF_PROCESSORS": "12",
+    "OneDrive": "C:\\Users\\MOHITBHAT\\OneDrive",
+    "OneDriveConsumer": "C:\\Users\\MOHITBHAT\\OneDrive",
+    "ORIGINAL_XDG_CURRENT_DESKTOP": "undefined",
+    "OS": "Windows_NT",
+    "Path": "C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Windows\\System32\\OpenSSH\\;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\Program Files\\NVIDIA Corporation\\NVIDIA NvDLISR;C:\\Program Files\\Intel\\WiFi\\bin\\;C:\\Program Files\\Common Files\\Intel\\WirelessCommon\\;C:\\Program Files\\Git\\cmd;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\Program Files\\nodejs\\;C:\\ProgramData\\chocolatey\\bin;C:\\MinGW\\bin;C:\\Program Files\\PuTTY\\;C:\\xampp\\php;C:\\Program Files\\Bitcoin\\daemon;C:\\Program Files\\Geth;C:\\Users\\MOHITBHAT\\ipfs;C:\\Users\\MOHITBHAT\\anaconda3;C:\\Users\\MOHITBHAT\\anaconda3\\Library\\mingw-w64\\bin;C:\\Users\\MOHITBHAT\\anaconda3\\Library\\usr\\bin;C:\\Users\\MOHITBHAT\\anaconda3\\Library\\bin;C:\\Users\\MOHITBHAT\\anaconda3\\Scripts;C:\\Users\\MOHITBHAT\\AppData\\Local\\Programs\\Python\\Python36\\Scripts\\;C:\\Users\\MOHITBHAT\\AppData\\Local\\Programs\\Python\\Python36\\;C:\\Users\\MOHITBHAT\\AppData\\Local\\Microsoft\\WindowsApps;C:\\Users\\MOHITBHAT\\AppData\\Local\\Programs\\Microsoft VS Code\\bin;C:\\Users\\MOHITBHAT\\AppData\\Roaming\\npm",
+    "PATHEXT": ".COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC;.CPL",
+    "PROCESSOR_ARCHITECTURE": "AMD64",
+    "PROCESSOR_IDENTIFIER": "Intel64 Family 6 Model 158 Stepping 10, GenuineIntel",
+    "PROCESSOR_LEVEL": "6",
+    "PROCESSOR_REVISION": "9e0a",
+    "ProgramData": "C:\\ProgramData",
+    "ProgramFiles": "C:\\Program Files",
+    "ProgramFiles(x86)": "C:\\Program Files (x86)",
+    "ProgramW6432": "C:\\Program Files",
+    "PSModulePath": "C:\\Users\\MOHITBHAT\\Documents\\WindowsPowerShell\\Modules;C:\\Program Files\\WindowsPowerShell\\Modules;C:\\WINDOWS\\system32\\WindowsPowerShell\\v1.0\\Modules",
+    "PT7HOME": "C:\\Program Files\\Cisco Packet Tracer 7.1.1",
+    "PUBLIC": "C:\\Users\\Public",
+    "QT_DEVICE_PIXEL_RATIO": "auto",
+    "SESSIONNAME": "Console",
+    "SystemDrive": "C:",
+    "SystemRoot": "C:\\WINDOWS",
+    "TEMP": "C:\\Users\\MOHITB~1\\AppData\\Local\\Temp",
+    "TMP": "C:\\Users\\MOHITB~1\\AppData\\Local\\Temp",
+    "USERDOMAIN": "LAPTOP-GFOS5NH9",
+    "USERDOMAIN_ROAMINGPROFILE": "LAPTOP-GFOS5NH9",
+    "USERNAME": "MOHITBHAT",
+    "USERPROFILE": "C:\\Users\\MOHITBHAT",
+    "windir": "C:\\WINDOWS",
+    "TERM_PROGRAM": "vscode",
+    "TERM_PROGRAM_VERSION": "1.46.0",
+    "LANG": "en_US.UTF-8",
+    "COLORTERM": "truecolor",
+    "VSCODE_GIT_IPC_HANDLE": "\\\\.\\pipe\\vscode-git-7ad09cd709-sock",
+    "GIT_ASKPASS": "c:\\Users\\MOHITBHAT\\AppData\\Local\\Programs\\Microsoft VS Code\\resources\\app\\extensions\\git\\dist\\askpass.sh",
+    "VSCODE_GIT_ASKPASS_NODE": "C:\\Users\\MOHITBHAT\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe",
+    "VSCODE_GIT_ASKPASS_MAIN": "c:\\Users\\MOHITBHAT\\AppData\\Local\\Programs\\Microsoft VS Code\\resources\\app\\extensions\\git\\dist\\askpass-main.js"
+  },
+  "sharedObjects": [
+    "C:\\Program Files\\nodejs\\node.exe",
+    "C:\\WINDOWS\\SYSTEM32\\ntdll.dll",
+    "C:\\WINDOWS\\System32\\KERNEL32.DLL",
+    "C:\\WINDOWS\\System32\\KERNELBASE.dll",
+    "C:\\WINDOWS\\System32\\WS2_32.dll",
+    "C:\\WINDOWS\\System32\\RPCRT4.dll",
+    "C:\\WINDOWS\\SYSTEM32\\dbghelp.dll",
+    "C:\\WINDOWS\\System32\\ADVAPI32.dll",
+    "C:\\WINDOWS\\System32\\ucrtbase.dll",
+    "C:\\WINDOWS\\System32\\msvcrt.dll",
+    "C:\\WINDOWS\\System32\\sechost.dll",
+    "C:\\WINDOWS\\System32\\USER32.dll",
+    "C:\\WINDOWS\\System32\\win32u.dll",
+    "C:\\WINDOWS\\System32\\GDI32.dll",
+    "C:\\WINDOWS\\System32\\gdi32full.dll",
+    "C:\\WINDOWS\\System32\\msvcp_win.dll",
+    "C:\\WINDOWS\\System32\\PSAPI.DLL",
+    "C:\\WINDOWS\\System32\\CRYPT32.dll",
+    "C:\\WINDOWS\\System32\\MSASN1.dll",
+    "C:\\WINDOWS\\System32\\bcrypt.dll",
+    "C:\\WINDOWS\\SYSTEM32\\USERENV.dll",
+    "C:\\WINDOWS\\SYSTEM32\\IPHLPAPI.DLL",
+    "C:\\WINDOWS\\System32\\profapi.dll",
+    "C:\\WINDOWS\\SYSTEM32\\WINMM.dll",
+    "C:\\WINDOWS\\SYSTEM32\\winmmbase.dll",
+    "C:\\WINDOWS\\System32\\cfgmgr32.dll",
+    "C:\\WINDOWS\\System32\\bcryptPrimitives.dll",
+    "C:\\WINDOWS\\System32\\IMM32.DLL",
+    "C:\\WINDOWS\\System32\\powrprof.dll",
+    "C:\\WINDOWS\\System32\\UMPDC.dll",
+    "C:\\WINDOWS\\SYSTEM32\\CRYPTBASE.DLL",
+    "C:\\WINDOWS\\system32\\uxtheme.dll",
+    "C:\\WINDOWS\\System32\\combase.dll",
+    "C:\\WINDOWS\\system32\\mswsock.dll",
+    "C:\\WINDOWS\\System32\\kernel.appcore.dll",
+    "C:\\WINDOWS\\System32\\NSI.dll",
+    "C:\\WINDOWS\\SYSTEM32\\dhcpcsvc6.DLL",
+    "C:\\WINDOWS\\SYSTEM32\\dhcpcsvc.DLL",
+    "C:\\WINDOWS\\SYSTEM32\\DNSAPI.dll",
+    "C:\\WINDOWS\\system32\\napinsp.dll",
+    "C:\\WINDOWS\\system32\\pnrpnsp.dll",
+    "C:\\WINDOWS\\System32\\winrnr.dll",
+    "C:\\WINDOWS\\system32\\NLAapi.dll",
+    "C:\\WINDOWS\\system32\\wshbth.dll"
+  ]
+}
