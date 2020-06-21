@@ -7,6 +7,7 @@ mapping(address=>address) recovToPrimary;
 mapping(address=>address) primToRecovery;
 mapping(address=>uint) balance;
 mapping (address=>uint) alive;
+uint aliveCondition=10;
 
      function getBalanceOfContract() public view returns (uint256) {
         return address(this).balance;
@@ -31,7 +32,7 @@ mapping (address=>uint) alive;
     }
     
     function claimAmount() public {
-        require((block.number-alive[recovToPrimary[msg.sender]])>10);
+        require((block.number-alive[recovToPrimary[msg.sender]])>aliveCondition);
         claimTransfer(msg.sender,balance[recovToPrimary[msg.sender]]);
         balance[recovToPrimary[msg.sender]]=0;
         
@@ -45,7 +46,5 @@ mapping (address=>uint) alive;
         return alive[msg.sender];
     }
     
-    
- 
 
 }
