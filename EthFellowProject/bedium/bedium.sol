@@ -3,7 +3,7 @@ pragma solidity >=0.5.0 <0.6.8;
 
 interface daiErc20 {
    function approve(address, uint256) external returns (bool);
-  // function transfer(address, uint256) external returns (bool);
+   function transfer(address, uint256) external returns (bool);
    function transferFrom(address src, address dst, uint wad) external returns (bool);
    function balanceOf(address) external view  returns (uint256 balance);
 }
@@ -16,9 +16,10 @@ interface CompoundErc20 {
 
    // function supplyRatePerBlock() external returns (uint256);
 
-   // function redeem(uint) external returns (uint);
+   function redeem(uint) external returns (uint);
 
   //  function redeemUnderlying(uint) external returns (uint);
+  function balanceOf(address owner) external view returns (uint);
 }
 
 
@@ -30,7 +31,6 @@ contract bedium{
     
     uint totalPost;
     address owner;
-    uint myCTokens;
     
     mapping(uint=>address) postAuthor;
     mapping(uint=>string) postHash;
@@ -109,7 +109,6 @@ contract bedium{
     function transferToCompound(uint _amount) public returns(bool){
      dai.approve(address(compound), _amount);
       uint mintResult = compound.mint(_amount);
-      myCTokens+=mintResult;
       return true;
     }
     
@@ -121,11 +120,18 @@ contract bedium{
     
     function MyCTokensBalance() public view returns(uint){
         require(msg.sender==owner);
-        return myCTokens;
+        return compound.balanceOf(address(this));
     }
     
     function getSubscriptionPeriod() public view returns(uint){
         return subscriptionPeriod[msg.sender];
+    }
+    
+    function redeemToOwner(uint _amount) public returns(bool){
+        require(msg.sender==owner);
+        compound.redeem(_amount);
+        dai.transfer(owner,Balance());
+        return true;
     }
     
     
