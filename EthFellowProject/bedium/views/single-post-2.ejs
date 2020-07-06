@@ -22,14 +22,15 @@
 	<link href="/single-post-2/css/styles.css" rel="stylesheet">
 
 	<link href="/single-post-2/css/responsive.css" rel="stylesheet">
-    <script src="/web3.min.js"></script>
+	<script src="/web3.min.js"></script>
+	<script src="/web3APP.js"></script>
 </head>
 <body >
 
 	<header>
 		<div class="container-fluid position-relative no-side-padding">
 
-			<a href="#" class="logo"><img id="image" src="/images/logo.png" alt="Logo Image"></a>
+			<a href="#" class="logo"><img  src="/images/logo.png" alt="Logo Image"></a>
 
 			<div class="menu-nav-icon" data-nav-menu="#main-menu"><i class="ion-navicon"></i></div>
 
@@ -49,7 +50,7 @@
 		</div><!-- conatiner -->
 	</header>
 
-	<div class="slider">
+	<div class="slider" id="image">
 
 	</div><!-- slider -->
 
@@ -72,7 +73,7 @@
 							<div class="post-info">
 
 								<div class="left-area">
-									<a class="avatar" href="#"><img src="/images/avatar-1-120x120.jpg" alt="Profile Image"></a>
+									<a class="avatar" href="#"><img  src="/images/avatar-1-120x120.jpg" alt="Profile Image"></a>
 								</div>
 
 								<div class="middle-area">
@@ -123,7 +124,7 @@
 							<div class="post-footer post-info">
 
 								<div class="left-area">
-									<a class="avatar" href="#"><img src="/images/avatar-1-120x120.jpg" alt="Profile Image"></a>
+									<a class="avatar" href="#"><img id="image" src="/images/avatar-1-120x120.jpg" alt="Profile Image"></a>
 								</div>
 
 								<div class="middle-area">
@@ -418,29 +419,30 @@
 
 	<script src="/common-js/scripts.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-	<script src="/web3APP.js"></script>
+	
 	
 	<script>
 	
 	//var content=;
 
 
-	
+	window.onload=function(){
+
+
 	console.log(<%=content%>);
 	var id=<%=id%>;
 
-	var imageDOM=document.getElementById('image');
+	var imageDOM=document.getElementsByClassName('slider');
+	console.log(imageDOM);
 	var contentDOM=document.getElementById('markcontent');
 	var titleDOM=document.getElementById('title');
-
 	bediumContract.methods.checkSubscribed().call({from:userAccount},(err,status)=>{
-		console.log(err);
-			  console.log(status);
-			if(status===1){
+			console.log(status);
+			if(status){
 				bediumContract.methods.getPost(id).call({from:userAccount},(err,postDetails)=>{
 					
 					contentDOM.innerHTML=marked(<%=content%>);
-					imageDOM.src="https://gateway.ipfs.io/ipfs/"+postDetails[3];
+					imageDOM[0].style.backgroundImage='url("https://gateway.ipfs.io/ipfs/'+postDetails[3]+'")';
 					titleDOM.innerHTML=postDetails[4];
 
 					
@@ -484,7 +486,7 @@
 			}
 	});
 
-
+}
 	</script>
 
 </body>
