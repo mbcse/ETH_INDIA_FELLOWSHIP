@@ -20,6 +20,25 @@ var bediumABI=[
 		"constant": false,
 		"inputs": [
 			{
+				"name": "_amount",
+				"type": "uint256"
+			}
+		],
+		"name": "redeemToOwner",
+		"outputs": [
+			{
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
 				"name": "_fileHash",
 				"type": "string"
 			},
@@ -221,7 +240,7 @@ var bediumABI=[
 		"type": "function"
 	}
 ];
-var bediumAddress="0xf43a54c42678a782a68d3acd3f8ae3c725451bc0";
+var bediumAddress="0x6ce0d96684afbd80214b8708bcf10f967e2098eb";
 var bediumContract = new web3.eth.Contract(bediumABI, bediumAddress);
 
 
