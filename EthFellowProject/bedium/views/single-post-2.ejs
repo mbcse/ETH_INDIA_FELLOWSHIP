@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
-	<title>TITLE</title>
+	<title>Bedium</title>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta charset="UTF-8">
@@ -30,14 +30,14 @@
 	<header>
 		<div class="container-fluid position-relative no-side-padding">
 
-			<a href="#" class="logo"><img  src="/images/logo.png" alt="Logo Image"></a>
+			<a href="/" class="logo">Bedium</a>
 
 			<div class="menu-nav-icon" data-nav-menu="#main-menu"><i class="ion-navicon"></i></div>
 
 			<ul class="main-menu visible-on-click" id="main-menu">
-				<li><a href="#">Home</a></li>
-				<li><a href="#">Categories</a></li>
-				<li><a href="#">Features</a></li>
+				<li><a href="/">Home</a></li>
+				<li><a href="/">Categories</a></li>
+				<li><a href="/">Features</a></li>
 			</ul><!-- main-menu -->
 
 			<div class="src-area">
@@ -50,7 +50,7 @@
 		</div><!-- conatiner -->
 	</header>
 
-	<div class="slider" id="image">
+	<div class="slider" id="image" style="background-repeat: no-repeat;background-size: 100% 100%; ">
 
 	</div><!-- slider -->
 
@@ -73,12 +73,12 @@
 							<div class="post-info">
 
 								<div class="left-area">
-									<a class="avatar" href="#"><img  src="/images/avatar-1-120x120.jpg" alt="Profile Image"></a>
+									<a class="avatar" href="#"><img  src="/images/A.jfif" alt="Profile Image"></a>
 								</div>
 
 								<div class="middle-area">
-									<a class="name" href="#"><b>Katy Liu</b></a>
-									<h6 class="date">on Sep 29, 2017 at 9:48 am</h6>
+									<a class="name" href="#"><b id="authorname"></b></a>
+									<h6 id="authoraddress"></h6>
 								</div>
 
 							</div ><!-- post-info -->
@@ -121,18 +121,7 @@
 								</ul>
 							</div>
 
-							<div class="post-footer post-info">
-
-								<div class="left-area">
-									<a class="avatar" href="#"><img id="image" src="/images/avatar-1-120x120.jpg" alt="Profile Image"></a>
-								</div>
-
-								<div class="middle-area">
-									<a class="name" href="#"><b>Author Adress: </b></a>
-									<h6>jwnfkwenk</h6>
-								</div>
-
-							</div><!-- post-info -->
+					
 
 						</div><!-- post-bottom-area -->
 
@@ -360,9 +349,9 @@
 				<div class="col-lg-4 col-md-6">
 					<div class="footer-section">
 
-						<a class="logo" href="#"><img src="/images/logo.png" alt="Logo Image"></a>
-						<p class="copyright">Bona @ 2017. All rights reserved.</p>
-						<p class="copyright">Designed by <a href="https://colorlib.com" target="_blank">Colorlib</a></p>
+						<a class="logo" href="#"></a>
+						<p class="copyright">Bedium 2020. All rights reserved.</p>
+						<p class="copyright">Designed by <a href="/" target="_blank">Blockchain</a></p>
 						<ul class="icons">
 							<li><a href="#"><i class="ion-social-facebook-outline"></i></a></li>
 							<li><a href="#"><i class="ion-social-twitter-outline"></i></a></li>
@@ -375,7 +364,7 @@
 				</div><!-- col-lg-4 col-md-6 -->
 
 				<div class="col-lg-4 col-md-6">
-						<div class="footer-section">
+					<div class="footer-section">
 						<h4 class="title"><b>CATAGORIES</b></h4>
 						<ul>
 							<li><a href="#">BEAUTY</a></li>
@@ -386,6 +375,8 @@
 							<li><a href="#">SPORT</a></li>
 							<li><a href="#">DESIGN</a></li>
 							<li><a href="#">TRAVEL</a></li>
+							<li><a href="#">BLOCKCHAIN</a></li>
+							<li><a href="#">TECH</a></li>
 						</ul>
 					</div><!-- footer-section -->
 				</div><!-- col-lg-4 col-md-6 -->
@@ -432,58 +423,71 @@
 	console.log(<%=content%>);
 	var id=<%=id%>;
 
+	var authorname=document.getElementById('authorname');
+	var authoraddress=document.getElementById('authoraddress');
+
 	var imageDOM=document.getElementsByClassName('slider');
 	console.log(imageDOM);
 	var contentDOM=document.getElementById('markcontent');
 	var titleDOM=document.getElementById('title');
 	bediumContract.methods.checkSubscribed().call({from:userAccount},(err,status)=>{
-			console.log(status);
-			if(status){
-				bediumContract.methods.getPost(id).call({from:userAccount},(err,postDetails)=>{
-					
-					contentDOM.innerHTML=marked(<%=content%>);
-					imageDOM[0].style.backgroundImage='url("https://gateway.ipfs.io/ipfs/'+postDetails[3]+'")';
-					titleDOM.innerHTML=postDetails[4];
+		    
+			bediumContract.methods.CheckAuthorOwner(id).call({from:userAccount},(err,resu)=>{
+				console.log(resu);
+					console.log(status);
+					if(status || resu){
+						bediumContract.methods.getPost(id).call({from:userAccount},(err,postDetails)=>{
+							
+							contentDOM.innerHTML=marked(<%=content%>);
+							imageDOM[0].style.backgroundImage='url("https://gateway.ipfs.io/ipfs/'+postDetails[3]+'")';
+							titleDOM.innerHTML=postDetails[4];
+							authoraddress.innerHTML=postDetails[1];
+							authorname.innerHTML=postDetails[5];
 
-					
-				});
-			}
-			else{
-                if(confirm("YOU DON't have subscription, confirm To pay 10 Dai as subscription fee")){
-                    daiContract.methods.approve(bediumAddress,'1000000000000000000').send({from:userAccount},(err,txh)=>{
-						if(err)
-						    alert("Something went wrong Try Again");    
-					}).on('receipt',(rc)=>{
-										bediumContract.methods.transferDai('1000000000000000000').send({from:userAccount},(err,txh)=>{
-											if(err)
-												alert("Something went wrong Try Again");
-											
-										}).on('receipt',(rc)=>{		
-												bediumContract.methods.transferToCompound('1000000000000000000').send({from:userAccount},(err,txh)=>{
+							
+						});
+					}
+					else{
+						if(confirm("You don't have subscription, confirm To pay 10 Dai as subscription fee")){
+							daiContract.methods.approve(bediumAddress,'1000000000000000000').send({from:userAccount},(err,txh)=>{
+								if(err)
+									alert("Something went wrong Try Again");    
+							}).on('receipt',(rc)=>{
+												bediumContract.methods.transferDai('1000000000000000000').send({from:userAccount},(err,txh)=>{
+													if(err)
+														alert("Something went wrong Try Again");
 													
-												}).on('receipt',(rc)=>{
+												}).on('receipt',(rc)=>{		
+														bediumContract.methods.transferToCompound('1000000000000000000').send({from:userAccount},(err,txh)=>{
+															
+														}).on('receipt',(rc)=>{
 
-                                                    alert("Thankyou");
-													bediumContract.methods.getPost(id).call({from:userAccount},(err,postDetails)=>{
-											
-																	contentDOM.innerHTML=marked(<%=content%>);
-																	imageDOM.src="https://gateway.ipfs.io/ipfs/"+postDetails[3];
-																	titleDOM.innerHTML=postDetails[4];
+															alert("Thankyou");
+															bediumContract.methods.getPost(id).call({from:userAccount},(err,postDetails)=>{
+													
+																			contentDOM.innerHTML=marked(<%=content%>);
+																			imageDOM.src="https://gateway.ipfs.io/ipfs/"+postDetails[3];
+																			titleDOM.innerHTML=postDetails[4];
+																			authoraddress.innerHTML=postDetails[1];
+																			authorname.innerHTML=postDetails[5];
 
-																	
+																			
+															});
+														});
+													
 													});
-												});
-											   
-										    });
-					    });
-				}
-				else
-				{
-					window.location.href = "/";
-				}
-				
-				 
-			}
+								});
+						}
+						else
+						{
+							window.location.href = "/";
+						}
+						
+						
+					}
+
+			});
+			
 	});
 
 }

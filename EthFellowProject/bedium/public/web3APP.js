@@ -17,6 +17,20 @@ web3.eth.getAccounts().then((accounts)=>{
 
 var bediumABI=[
 	{
+		"constant": true,
+		"inputs": [],
+		"name": "Balance",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
 		"constant": false,
 		"inputs": [
 			{
@@ -24,38 +38,11 @@ var bediumABI=[
 				"type": "uint256"
 			}
 		],
-		"name": "redeemToOwner",
+		"name": "transferToCompound",
 		"outputs": [
 			{
 				"name": "",
 				"type": "bool"
-			}
-		],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"constant": false,
-		"inputs": [
-			{
-				"name": "_fileHash",
-				"type": "string"
-			},
-			{
-				"name": "_imageHash",
-				"type": "string"
-			},
-			{
-				"name": "_title",
-				"type": "string"
-			}
-		],
-		"name": "setNewPost",
-		"outputs": [
-			{
-				"name": "",
-				"type": "uint256"
 			}
 		],
 		"payable": false,
@@ -82,34 +69,9 @@ var bediumABI=[
 		"type": "function"
 	},
 	{
-		"constant": false,
-		"inputs": [
-			{
-				"name": "_amount",
-				"type": "uint256"
-			}
-		],
-		"name": "transferToCompound",
-		"outputs": [
-			{
-				"name": "",
-				"type": "bool"
-			}
-		],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "constructor"
-	},
-	{
 		"constant": true,
 		"inputs": [],
-		"name": "Balance",
+		"name": "MyCTokensBalance",
 		"outputs": [
 			{
 				"name": "",
@@ -122,8 +84,13 @@ var bediumABI=[
 	},
 	{
 		"constant": true,
-		"inputs": [],
-		"name": "checkSubscribed",
+		"inputs": [
+			{
+				"name": "_id",
+				"type": "uint256"
+			}
+		],
+		"name": "CheckAuthorOwner",
 		"outputs": [
 			{
 				"name": "",
@@ -163,6 +130,10 @@ var bediumABI=[
 			{
 				"name": "",
 				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "string"
 			}
 		],
 		"payable": false,
@@ -170,9 +141,26 @@ var bediumABI=[
 		"type": "function"
 	},
 	{
-		"constant": true,
-		"inputs": [],
-		"name": "getSubscriptionPeriod",
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_fileHash",
+				"type": "string"
+			},
+			{
+				"name": "_imageHash",
+				"type": "string"
+			},
+			{
+				"name": "_title",
+				"type": "string"
+			},
+			{
+				"name": "_authorName",
+				"type": "string"
+			}
+		],
+		"name": "setNewPost",
 		"outputs": [
 			{
 				"name": "",
@@ -180,7 +168,7 @@ var bediumABI=[
 			}
 		],
 		"payable": false,
-		"stateMutability": "view",
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
@@ -212,6 +200,39 @@ var bediumABI=[
 		"type": "function"
 	},
 	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_amount",
+				"type": "uint256"
+			}
+		],
+		"name": "redeemToOwner",
+		"outputs": [
+			{
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "getSubscriptionPeriod",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
 		"constant": true,
 		"inputs": [],
 		"name": "getUserTotalPosts",
@@ -228,19 +249,25 @@ var bediumABI=[
 	{
 		"constant": true,
 		"inputs": [],
-		"name": "MyCTokensBalance",
+		"name": "checkSubscribed",
 		"outputs": [
 			{
 				"name": "",
-				"type": "uint256"
+				"type": "bool"
 			}
 		],
 		"payable": false,
 		"stateMutability": "view",
 		"type": "function"
+	},
+	{
+		"inputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "constructor"
 	}
 ];
-var bediumAddress="0x6ce0d96684afbd80214b8708bcf10f967e2098eb";
+var bediumAddress="0x39bc2f740a36373914e3639a8ff17c5a62d0746e";
 var bediumContract = new web3.eth.Contract(bediumABI, bediumAddress);
 
 

@@ -33,6 +33,7 @@ contract bedium{
     address owner;
     
     mapping(uint=>address) postAuthor;
+    mapping(uint=>string) postAuthorName;
     mapping(uint=>string) postHash;
     mapping(uint=>string) imageHash;
     mapping(uint=>string) postTitle;
@@ -64,8 +65,9 @@ contract bedium{
     // }
     
     
-    function setNewPost(string memory _fileHash, string memory _imageHash, string memory _title ) public returns(uint){
+    function setNewPost(string memory _fileHash, string memory _imageHash, string memory _title, string memory _authorName ) public returns(uint){
         postAuthor[++totalPost]=msg.sender;
+        postAuthorName[totalPost]=_authorName;
         postHash[totalPost]=_fileHash;
         imageHash[totalPost]=_imageHash;
         postTitle[totalPost]=_title;
@@ -74,8 +76,8 @@ contract bedium{
         return totalPost;
     }
     
-    function getPost(uint _id) public view returns(uint, address, string memory,string memory ,string memory){
-        return (_id, postAuthor[_id], postHash[_id], imageHash[_id], postTitle[_id]);
+    function getPost(uint _id) public view returns(uint, address, string memory,string memory ,string memory, string memory){
+        return (_id, postAuthor[_id], postHash[_id], imageHash[_id], postTitle[_id], postAuthorName[_id]);
     }
     
     function getTotalPost() public view returns(uint){
@@ -97,6 +99,16 @@ contract bedium{
             return false;
         }
       return true;
+    }
+    
+    
+    function CheckAuthorOwner(uint _id) public view returns(bool){
+        if(msg.sender==owner || msg.sender==postAuthor[_id]){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
     
     
