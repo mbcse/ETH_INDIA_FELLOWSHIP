@@ -4,6 +4,7 @@ if(Web3.givenProvider==null){
 }
 else
 {
+   window.ethereum.enable();
    web3=new Web3(Web3.givenProvider);
    console.log(window.web3.currentProvider.isMetaMask);
 }
@@ -16,6 +17,20 @@ web3.eth.getAccounts().then((accounts)=>{
 
 
 var bediumABI=[
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "getNextPayTime",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
 	{
 		"constant": true,
 		"inputs": [],
@@ -38,7 +53,7 @@ var bediumABI=[
 				"type": "uint256"
 			}
 		],
-		"name": "transferToCompound",
+		"name": "transferDai",
 		"outputs": [
 			{
 				"name": "",
@@ -53,17 +68,31 @@ var bediumABI=[
 		"constant": false,
 		"inputs": [
 			{
-				"name": "_amount",
+				"name": "_likes",
 				"type": "uint256"
 			}
 		],
-		"name": "transferDai",
+		"name": "getPaid",
 		"outputs": [
 			{
 				"name": "",
 				"type": "bool"
 			}
 		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_name",
+				"type": "string"
+			}
+		],
+		"name": "setUserName",
+		"outputs": [],
 		"payable": false,
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -141,37 +170,6 @@ var bediumABI=[
 		"type": "function"
 	},
 	{
-		"constant": false,
-		"inputs": [
-			{
-				"name": "_fileHash",
-				"type": "string"
-			},
-			{
-				"name": "_imageHash",
-				"type": "string"
-			},
-			{
-				"name": "_title",
-				"type": "string"
-			},
-			{
-				"name": "_authorName",
-				"type": "string"
-			}
-		],
-		"name": "setNewPost",
-		"outputs": [
-			{
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
 		"constant": true,
 		"inputs": [],
 		"name": "getTotalPost",
@@ -188,11 +186,112 @@ var bediumABI=[
 	{
 		"constant": true,
 		"inputs": [],
+		"name": "getPaidAmount",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "getPAYDetails",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"name": "",
+				"type": "bool"
+			},
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_hash",
+				"type": "string"
+			}
+		],
+		"name": "setCoverImage",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_fileHash",
+				"type": "string"
+			},
+			{
+				"name": "_imageHash",
+				"type": "string"
+			},
+			{
+				"name": "_title",
+				"type": "string"
+			}
+		],
+		"name": "setNewPost",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "_user",
+				"type": "address"
+			}
+		],
 		"name": "getUserPostsArray",
 		"outputs": [
 			{
 				"name": "",
 				"type": "uint256[]"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "_user",
+				"type": "address"
+			}
+		],
+		"name": "getUserTotalPosts",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
 			}
 		],
 		"payable": false,
@@ -219,6 +318,34 @@ var bediumABI=[
 		"type": "function"
 	},
 	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_to",
+				"type": "address"
+			}
+		],
+		"name": "transferSubscription",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_hash",
+				"type": "string"
+			}
+		],
+		"name": "setUserImage",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
 		"constant": true,
 		"inputs": [],
 		"name": "getSubscriptionPeriod",
@@ -234,12 +361,25 @@ var bediumABI=[
 	},
 	{
 		"constant": true,
-		"inputs": [],
-		"name": "getUserTotalPosts",
+		"inputs": [
+			{
+				"name": "_user",
+				"type": "address"
+			}
+		],
+		"name": "getUserDetails",
 		"outputs": [
 			{
 				"name": "",
-				"type": "uint256"
+				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "string"
 			}
 		],
 		"payable": false,
@@ -267,7 +407,7 @@ var bediumABI=[
 		"type": "constructor"
 	}
 ];
-var bediumAddress="0x39bc2f740a36373914e3639a8ff17c5a62d0746e";
+var bediumAddress="0x19e04bdf7c15db43fe905bbe3c367efc7af9745a";
 var bediumContract = new web3.eth.Contract(bediumABI, bediumAddress);
 
 

@@ -27,10 +27,44 @@
 </head>
 <body >
 
+
+	  
+	  <!-- Modal -->
+	  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <h5 class="modal-title" id="exampleModalLabel">Notice</h5>
+			  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			  </button>
+			</div>
+			<div class="modal-body">
+				<h5 id="message" >You don't have a subscription, Click to pay 1 dai to get subscription for 30 days</h5>
+				<div class="container" id="statusBar">
+					<h2 id="headingmessage">Transacting</h2><br>
+					There will be series of Metamask Popup's
+					<p id="proStatus">Starting</p> 
+					<div class="progress">
+					  <div class="progress-bar progress-bar-striped progress-bar-animated" id="progressBar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%">
+						<span id="barStatusValue">0%</span>
+					  </div>
+					</div>
+				  </div>
+			</div>
+			<div class="modal-footer">
+			  <button type="button" class="btn btn-secondary" data-dismiss="modal" id="cancel" style="display: block;">Cancel</button>
+			  <button type="button" class="btn btn-secondary" data-dismiss="modal" style="display: none;" id="close">close</button>
+			  <button type="button" class="btn btn-primary" id="subscribe" style="display: block;">subscribe</button>
+			</div>
+		  </div>
+		</div>
+	  </div>
+        <!-- Modal End -->
 	<header>
 		<div class="container-fluid position-relative no-side-padding">
 
-			<a href="/" class="logo">Bedium</a>
+			<a href="/" class="logo"><strong>Bedium</strong></a>
 
 			<div class="menu-nav-icon" data-nav-menu="#main-menu"><i class="ion-navicon"></i></div>
 
@@ -73,7 +107,7 @@
 							<div class="post-info">
 
 								<div class="left-area">
-									<a class="avatar" href="#"><img  src="/images/A.jfif" alt="Profile Image"></a>
+									<a class="avatar" id="seeprofilelink" href=""><img  src="/images/A.jfif" id="profileImage" alt="Profile Image"></a>
 								</div>
 
 								<div class="middle-area">
@@ -108,7 +142,7 @@
 
 							<div class="post-icons-area">
 								<ul class="post-icons">
-									<li><a href="#"><i class="ion-heart"></i>57</a></li>
+									<li><a href="#likess" id="likebtn"><i class="ion-heart"></i><span id="likebtnvalue">0</span></a></li>
 									<li><a href="#"><i class="ion-chatbubble"></i>6</a></li>
 									<li><a href="#"><i class="ion-eye"></i>138</a></li>
 								</ul>
@@ -413,15 +447,63 @@
 	
 	
 	<script>
-	
-	//var content=;
 
+	var messagediv=document.getElementById('message');
+	var barContainer=document.getElementById('statusBar');
+            barContainer.style.display="none";
 
+            var statusText=document.getElementById('proStatus');
+            var probarDiv=document.getElementById('progressBar');
+            var statusShowValue=document.getElementById('barStatusValue');
+            var statusValue=0;
+
+            var putStatusValue=function(val,text){
+                proStatus.innerHTML=text;
+                statusShowValue.innerHTML=val+"%";
+                probarDiv.style.width=val+"%";  
+            }
+            var progressInterval;
+            var updatebar=function(){
+                            if(statusValue>=0 && statusValue<10){
+                            putStatusValue(statusValue, "Please Approve Spending of 1 Dai");
+                            }
+                            else if(statusValue>=10 && statusValue <40){
+                                putStatusValue(statusValue, "Processing");
+                            } 
+
+                            else if(statusValue>=40 && statusValue <60){
+                                putStatusValue(statusValue, "Sending Dai, Please Approve");
+							}
+							else if(statusValue>=60 && statusValue <80){
+                                putStatusValue(statusValue, "Thankyou! Transfering Dai");
+                            }
+
+                            else if(statusValue>=80 && statusValue <=95){
+                                putStatusValue(statusValue,"Completing Transaction, Please Approve");
+                            }
+                            else{
+                                //putStatusValue(100,"Done! Thankyou For Subscribing!!");
+                                clearInterval(progressInterval);
+                            }
+
+                            statusValue++;
+
+            }
+
+            var startUpload=function(){
+					barContainer.style.display="block";   
+					messagediv.style.display="none";           
+                    progressInterval = setInterval(updatebar, 1500);
+                    
+                }
+
+//***************************************************************************************************************************
 	window.onload=function(){
 
 
 	console.log(<%=content%>);
 	var id=<%=id%>;
+	var postAuthorAddress;
 
 	var authorname=document.getElementById('authorname');
 	var authoraddress=document.getElementById('authoraddress');
@@ -442,27 +524,43 @@
 							imageDOM[0].style.backgroundImage='url("https://gateway.ipfs.io/ipfs/'+postDetails[3]+'")';
 							titleDOM.innerHTML=postDetails[4];
 							authoraddress.innerHTML=postDetails[1];
+							postAuthorAddress=postDetails[1];
+							document.getElementById('likebtnvalue').innerHTML=httpGetLikes("/getlikecount/"+postDetails[1]);
 							authorname.innerHTML=postDetails[5];
+							document.getElementById('seeprofilelink').href="/seeprofile?address="+postDetails[1];   
+							bediumContract.methods.getUserDetails(postDetails[1]).call({from:userAccount},(err,user)=>{
+								document.getElementById('profileImage').src="https://gateway.ipfs.io/ipfs/"+user[1]; 
+								           
+							});
 
 							
 						});
 					}
 					else{
-						if(confirm("You don't have subscription, confirm To pay 10 Dai as subscription fee")){
+						$('#exampleModal').modal('show');
+						
+						document.getElementById('subscribe').addEventListener('click',()=>{
+														
+							startUpload();
 							daiContract.methods.approve(bediumAddress,'1000000000000000000').send({from:userAccount},(err,txh)=>{
 								if(err)
-									alert("Something went wrong Try Again");    
-							}).on('receipt',(rc)=>{
+									alert("Something went wrong Try Again");  
+								statusValue=11;
+								putStatusValue(statusValue,"Thankyou!");	  
+							    }).on('receipt',(rc)=>{
+									                statusValue=41;
+								                    putStatusValue(statusValue,"Sending Dai, Please Approve");
 												bediumContract.methods.transferDai('1000000000000000000').send({from:userAccount},(err,txh)=>{
 													if(err)
 														alert("Something went wrong Try Again");
-													
-												}).on('receipt',(rc)=>{		
-														bediumContract.methods.transferToCompound('1000000000000000000').send({from:userAccount},(err,txh)=>{
+														statusValue=60;
+								                        putStatusValue(statusValue,"Thankyou!");	
+												    }).on('receipt',(rc)=>{		
+														statusValue=80;
+														putStatusValue(statusValue,"Thankyou!");
+														statusValue=100;
+															putStatusValue(statusValue,"Done! Thankyou For Subscribing!!");
 															
-														}).on('receipt',(rc)=>{
-
-															alert("Thankyou");
 															bediumContract.methods.getPost(id).call({from:userAccount},(err,postDetails)=>{
 													
 																			contentDOM.innerHTML=marked(<%=content%>);
@@ -470,27 +568,76 @@
 																			titleDOM.innerHTML=postDetails[4];
 																			authoraddress.innerHTML=postDetails[1];
 																			authorname.innerHTML=postDetails[5];
+																			postAuthorAddress=postDetails[1];
+																			document.getElementById('likebtnvalue').innerHTML=httpGetLikes("/getlikecount/"+postDetails[1]);
+																			document.getElementById('seeprofilelink').href="/seeprofile?address="+postDetails[1];  
+																			document.getElementById('headingmessage').innerHTML="Subscribed!";
+																			document.getElementById('close').style.display="block";
+																			document.getElementById('cancel').style.display="none";
+																			document.getElementById('subscribe').style.display="none";
+																			bediumContract.methods.getUserDetails(postDetails[1]).call({from:userAccount},(err,user)=>{
+																				document.getElementById('profileImage').src="https://gateway.ipfs.io/ipfs/"+user[1];               
+																			});
 
 																			
 															});
-														});
+														// bediumContract.methods.transferToCompound('1000000000000000000').send({from:userAccount},(err,txh)=>{
+														// statusValue=96;
+								                        // putStatusValue(statusValue,"Thankyou! Subscribing You! Please wait...");
+														// }).on('receipt',(rc)=>{
+          
+
+														// });
 													
 													});
 								});
-						}
-						else
-						{
+
+						});
+
+
+
+						document.getElementById('cancel').addEventListener('click',()=>{
 							window.location.href = "/";
-						}
-						
-						
+                        });
+	
 					}
 
 			});
 			
 	});
 
+    
+    document.getElementById('likebtn').addEventListener('click',()=>{
+	  $.ajax({
+		  url:"/like/"+postAuthorAddress,
+		  type:"get",
+		  success:(response)=>{
+			  if(response.status){
+				document.getElementById('likebtnvalue').innerHTML=parseInt(document.getElementById('likebtnvalue').innerHTML)+1;
+			  }
+			  else
+			  {
+				 alert("Something went wrong"); 
+			  }
+
+		  }
+
+	  });
+		
+	});
+
+
+
+
+
 }
+
+function httpGetLikes(theUrl){
+			var xmlHttp = new XMLHttpRequest();
+			xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
+			xmlHttp.send( null );
+			return JSON.parse(xmlHttp.responseText).likes;
+	}
 	</script>
 
 </body>

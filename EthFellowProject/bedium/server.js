@@ -7,10 +7,23 @@ var multer=require('multer');
 var fs = require("fs");
 const uuidv1 = require('uuid/v1');
 const fetch = require('node-fetch');
+var mysql = require('mysql');
 
 
 
 var app = express();
+var con = mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "",
+  database:"bedium"
+});
+
+//Database Connection
+con.connect(function(err) {
+  if (err) throw err;
+  console.log("Database Connected!");
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -114,7 +127,59 @@ app.get("/viewpost/:id/:hash",(req,res)=>
 });
 
 
+app.get("/myaccount",(req,res)=>
+{
+  res.render('profile');
+
+});
+
+app.get("/seeprofile",(req,res)=>
+{
+  var address=req.query.address;
+  console.log(address);
+  var sen=JSON.stringify({user:address});
+  res.render('publicprofile',{obj:sen});
+
+});
+
+app.get("/like/:address",(req,res)=>{
+  var id=req.params.address;
+  con.query("insert into like_data values(?,?) ON DUPLICATE KEY UPDATE likes = likes + 1; ",[id,1],(err,resu)=>{
+   if (err) 
+   //res.redirect("/");
+   res.json({status:false});
+   else
+     res.json({status:true});
+     //res.redirect("/");
+  });
+
+});
+
+app.get("/getlikecount/:address",(req,res)=>{
+    var id=req.params.address;
+    console.log(id);
+    con.query("select likes from like_data where user=?",[id],(err,resu)=>{
+        if(err){
+        res.json({likes:0});
+       
+        }
+        else
+        {
+          if(resu[0]){
+          
+           res.json({likes:resu[0].likes})
+          }
+          else
+          {
+            res.json({likes:0});
+           
+          }
+        }
+    });
+});
+
+
 app.listen(5000,()=>
 {
-  console.log("Server started at port 3000");
+  console.log("Server started at port 5000");
 })
