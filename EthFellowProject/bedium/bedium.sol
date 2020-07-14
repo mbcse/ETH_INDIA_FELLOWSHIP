@@ -32,23 +32,47 @@ contract bedium{
     uint totalPost;
     address owner;
     
+    //Post Details
     mapping(uint=>address) postAuthor;
-    mapping(uint=>string) postAuthorName;
+    //mapping(uint=>string) postAuthorName;
     mapping(uint=>string) postHash;
     mapping(uint=>string) imageHash;
     mapping(uint=>string) postTitle;
    
     
-    uint[] posts;
-    mapping(address=>uint[]) postsList;
+   //User Details
+    mapping(address=>string) userName;
+    mapping(address=>string) userImage;
+    mapping(address=>string) userCoverImage;
+    mapping(address=>bool) userStatus;
+    mapping(address=>uint[]) userPostsList;
     mapping(address=>uint) totalUserPosts;
     mapping(address=>uint) subscriptionPeriod;
     
     constructor() public{
        owner=msg.sender; 
     }
+//******************************************POST FUNCTIONS*********************************************************************
+    function setNewPost(string memory _fileHash, string memory _imageHash, string memory _title ) public returns(uint){
+        postAuthor[++totalPost]=msg.sender;
+        postHash[totalPost]=_fileHash;
+        imageHash[totalPost]=_imageHash;
+        postTitle[totalPost]=_title;
+        userPostsList[msg.sender].push(totalPost);
+        totalUserPosts[msg.sender]+=1;
+        return totalPost;
+    }
     
-    // function updatePost(uint id, string memory hash) public returns(bool){
+    function getPost(uint _id) public view returns(uint, address, string memory,string memory ,string memory, string memory){
+        return (_id, postAuthor[_id], postHash[_id], imageHash[_id], postTitle[_id], userName[postAuthor[_id]]);
+    }
+    
+    function getTotalPost() public view returns(uint){
+        return totalPost;
+    }
+    
+    
+        // function updatePost(uint id, string memory hash) public returns(bool){
     //     if(totalPost>=id && postAuthor[id]==msg.sender){
     //          postHash[id]=hash;
     //          return(true);
@@ -65,42 +89,30 @@ contract bedium{
     // }
     
     
-    function setNewPost(string memory _fileHash, string memory _imageHash, string memory _title, string memory _authorName ) public returns(uint){
-        postAuthor[++totalPost]=msg.sender;
-        postAuthorName[totalPost]=_authorName;
-        postHash[totalPost]=_fileHash;
-        imageHash[totalPost]=_imageHash;
-        postTitle[totalPost]=_title;
-        postsList[msg.sender].push(totalPost);
-        totalUserPosts[msg.sender]+=1;
-        return totalPost;
-    }
-    
-    function getPost(uint _id) public view returns(uint, address, string memory,string memory ,string memory, string memory){
-        return (_id, postAuthor[_id], postHash[_id], imageHash[_id], postTitle[_id], postAuthorName[_id]);
-    }
-    
-    function getTotalPost() public view returns(uint){
-        return totalPost;
-    }
-    
-    function getUserTotalPosts() public view returns(uint){
-        return totalUserPosts[msg.sender];
+//**********************************************USER FUNTIONS*************************
+    function getUserTotalPosts(address _user) public view returns(uint){
+        return totalUserPosts[_user];
     }
      
-    function getUserPostsArray() public view returns(uint[] memory){
-        return postsList[msg.sender];
+    function getUserPostsArray(address _user) public view returns(uint[] memory){
+        return userPostsList[_user];
     }
     
-    
-    
-    function checkSubscribed() public view returns(bool){
-        if(block.timestamp>subscriptionPeriod[msg.sender]){
-            return false;
-        }
-      return true;
+    function setUserName(string memory _name) public{
+        userName[msg.sender]=_name;
     }
     
+    function setUserImage(string memory _hash) public{
+        userImage[msg.sender]=_hash;
+    }
+    
+    function setCoverImage(string memory _hash) public{
+        userCoverImage[msg.sender]=_hash;
+    }
+    
+    function getUserDetails(address _user) public view returns(string memory, string memory, string memory){
+        return(userName[_user], userImage[_user], userCoverImage[_user]);
+    }
     
     function CheckAuthorOwner(uint _id) public view returns(bool){
         if(msg.sender==owner || msg.sender==postAuthor[_id]){
@@ -111,33 +123,44 @@ contract bedium{
         }
     }
     
+    function checkSubscribed() public view returns(bool){
+        if(block.timestamp>subscriptionPeriod[msg.sender]){
+            return false;
+        }
+      return true;
+    }    
+
+    function getSubscriptionPeriod() public view returns(uint){
+        return subscriptionPeriod[msg.sender];
+    }
+    
+    function transferSubscription(address _to) public{
+        require(subscriptionPeriod[_to]<subscriptionPeriod[msg.sender]);
+        subscriptionPeriod[_to]=subscriptionPeriod[msg.sender];
+        subscriptionPeriod[msg.sender]=0;
+    }
+    
     
     function transferDai(uint _amount) public returns(bool){
         dai.transferFrom(msg.sender,address(this),_amount);
         subscriptionPeriod[msg.sender]=block.timestamp+30 days;
+        dai.approve(address(compound), _amount);
+        uint mintResult = compound.mint(_amount);
         return true;
-    }
+    }   
+
     
-    function transferToCompound(uint _amount) public returns(bool){
-     dai.approve(address(compound), _amount);
-      uint mintResult = compound.mint(_amount);
-      return true;
-    }
+
     
-    function Balance() public view returns(uint){
-         require(msg.sender==owner);
-         return dai.balanceOf(address(this));
-    }
-    
-    
-    function MyCTokensBalance() public view returns(uint){
+    function MyCTokensBalance() public view returns(uint256){
         require(msg.sender==owner);
         return compound.balanceOf(address(this));
     }
     
-    function getSubscriptionPeriod() public view returns(uint){
-        return subscriptionPeriod[msg.sender];
-    }
+    function Balance() public view returns(uint256){
+         require(msg.sender==owner);
+         return dai.balanceOf(address(this));
+    }    
     
     function redeemToOwner(uint _amount) public returns(bool){
         require(msg.sender==owner);
@@ -146,6 +169,53 @@ contract bedium{
         return true;
     }
     
+    mapping(address=>uint) internal likes;
+    mapping(address=>bool) internal status;
+    mapping(address=>uint) internal paidTime ;
+    mapping(address=>uint) internal PaidAmount;
+    uint internal totalAuthors;
+    function getPaid(uint _likes) public returns(bool){
+        require(_likes>10);
+        likes[msg.sender]=_likes;
+        require(paidTime[msg.sender]+30 days<=block.timestamp);
+        if(!status[msg.sender]){
+        status[msg.sender]=true;
+        ++totalAuthors;
+        paidTime[msg.sender]=block.timestamp;
+        uint256 balance=compound.balanceOf(address(this))/uint256(totalAuthors);
+        compound.redeem(balance);
+        PaidAmount[msg.sender]+=Balance();
+        dai.transfer(msg.sender,Balance());
+        }
+        else
+        {
+        paidTime[msg.sender]=block.timestamp;
+        uint256 balance=compound.balanceOf(address(this))/uint256(totalAuthors);
+        compound.redeem(balance);
+        PaidAmount[msg.sender]+=Balance();
+        dai.transfer(msg.sender,Balance());
+        }
+
+        return true;
+    }  
     
+  function getNextPayTime() public view returns(uint){
+        return paidTime[msg.sender]+30 days;
+    }
+    
+  function getPaidAmount() public view returns(uint){
+        return PaidAmount[msg.sender];
+    }   
+    
+  function getPAYDetails() public view returns(uint, bool, uint){
+      return(likes[msg.sender], status[msg.sender],totalAuthors);
+  }    
+    
+    
+    // function transferToCompound(uint _amount) public returns(bool){
+    //  dai.approve(address(compound), _amount);
+    //   uint mintResult = compound.mint(_amount);
+    //   return true;
+    // }    
     
 }
